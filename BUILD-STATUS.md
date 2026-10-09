@@ -29,6 +29,8 @@ The current default is `gemma3:4b` through local Ollama. Installation and vision
 
 ## Remaining steps
 
+Public preview mode is ready for Render (`AI_PROVIDER=disabled`) without an inference key. The UI explains the local Gemma setup, keeps live observation requests disabled, and links to the labelled example. An optional `DEMO_VIDEO_URL` adds the walkthrough link. Seventeen tests and the production build pass, including a disabled-mode API check. No public service has been provisioned yet.
+
 1. Local Gemma installation is complete. A public Render deployment still requires a verified hosted open-weight vision endpoint in its Render environment.
 2. Live inference is connected and its first pipeline response is recorded in ignored `artifacts/instruct-smoke-test.json`. Test real distinct subject/drawing images next, improve role grounding, and record exact model identity, speed, and errors.
 3. Evaluate actual subject photos and paper sketches in all six categories using `npm run evaluate -- evaluation/your-pairs.json`.

@@ -12,15 +12,9 @@ services:
       - key: HOST
         value: 0.0.0.0
       - key: AI_PROVIDER
-        value: hosted
+        value: disabled
       - key: AI_MODEL
-        sync: false
-      - key: AI_BASE_URL
-        sync: false
-      - key: AI_API_KEY
-        sync: false
-      - key: AI_RETENTION_NOTICE
-        sync: false
+        value: gemma3:4b
       - key: AI_TIMEOUT_MS
         value: 45000
       - key: AI_IMAGE_MAX_EDGE

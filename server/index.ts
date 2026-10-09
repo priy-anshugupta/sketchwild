@@ -33,9 +33,12 @@ async function capabilities(): Promise<Capabilities> {
   } else if (provider === 'hosted') {
     try { const parsed = new URL(config.baseUrl); configured = parsed.protocol === 'https:' && !!config.apiKey && !!config.model; } catch { configured = false; }
     reason = configured ? '' : 'A hosted open vision endpoint, model, and server API key are required.';
-  } else reason = 'Live feedback has not been configured.';
+  } else reason = 'This public preview has no live model. Run SketchWild locally with Ollama and Gemma 3 for AI observations; no API key is required.';
+  let demoVideoUrl: string | undefined;
+  try { const video = new URL(process.env.DEMO_VIDEO_URL || ''); if (video.protocol === 'https:') demoVideoUrl = video.href; } catch { /* A video link is optional. */ }
   const value: Capabilities = { provider: provider === 'ollama' ? 'ollama' : provider === 'hosted' ? 'hosted' : 'disabled', configured, model: config.model, timeoutMs: config.timeoutMs, readiness: 'experimental', reason,
-    notice: provider === 'ollama' ? 'Photos are processed by Ollama on this app’s computer. On CPU, two photos can take several minutes. Journal entries stay in your browser.' : `These two photos are sent through the app server to the configured AI provider. ${process.env.AI_RETENTION_NOTICE || 'Provider retention has not been verified. Use non-sensitive subject and sketch photos.'} Journal entries stay in your browser.` };
+    demoVideoUrl,
+    notice: provider === 'ollama' ? 'Photos are processed by Ollama on this app’s computer. On CPU, two photos can take several minutes. Journal entries stay in your browser.' : provider === 'hosted' ? `These two photos are sent through the app server to the configured AI provider. ${process.env.AI_RETENTION_NOTICE || 'Provider retention has not been verified. Use non-sensitive subject and sketch photos.'} Journal entries stay in your browser.` : 'Live AI is turned off in this preview. Uploaded pictures and journal entries stay in this browser; no pictures are sent for AI analysis.' };
   capabilityCache = { time: Date.now(), value }; return value;
 }
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
@@ -46,6 +49,7 @@ const visitors = new Map<string, { count: number; until: number }>();
 let active = 0, daily = 0, day = new Date().toISOString().slice(0, 10);
 const limit = Math.max(1, Number(process.env.AI_DAILY_REQUEST_LIMIT) || 100);
 app.post('/api/coach', (req, _res, next) => {
+  if (provider !== 'ollama' && provider !== 'hosted') return next(new ApiError(503, 'NOT_CONFIGURED', 'Live AI is turned off in this preview. Run SketchWild locally with Ollama and Gemma 3.'));
   // Same-origin browser requests only. Non-browser local clients may omit Origin.
   const origin = req.get('origin');
   if (origin) { try { if (new URL(origin).host !== req.get('host')) throw new Error(); } catch { return next(new ApiError(403, 'ORIGIN', 'This request must come from the SketchWild app.')); } }

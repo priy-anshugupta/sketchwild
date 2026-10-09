@@ -18,7 +18,7 @@ export const feedbackSchema = z.object({
 export type Feedback = z.infer<typeof feedbackSchema>;
 export type Analysis = Feedback & { meta: { source: 'live_ai' | 'example'; model: string; promptVersion: string; elapsedMs: number; createdAt: string; requestId: string } };
 export const requestSchema = z.object({ category: z.enum(categoryIds), intent: z.enum(intents), });
-export type Capabilities = { provider: 'ollama' | 'hosted' | 'disabled'; configured: boolean; model: string; notice: string; timeoutMs: number; reason?: string; readiness: 'experimental'; };
+export type Capabilities = { provider: 'ollama' | 'hosted' | 'disabled'; configured: boolean; model: string; notice: string; timeoutMs: number; reason?: string; readiness: 'experimental'; demoVideoUrl?: string; };
 export type Session = {
   id: string; parentId?: string; createdAt: string; updatedAt: string;
   category: CategoryId; minutes: number; intent: typeof intents[number];

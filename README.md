@@ -153,7 +153,9 @@ After building, open **[http://127.0.0.1:3001](http://127.0.0.1:3001)** for the 
 
 The repository includes a [Render blueprint](render.yaml). For a public deployment, configure a hosted vision endpoint and keep its key in the server environment. The blueprint's small paid app service does not run Gemma locally; inference runs separately. Render credits and an external inference provider's charges are separate.
 
-See **[DEPLOYMENT.md](DEPLOYMENT.md)** for local production setup, hosted configuration, environment variables, and deployment checks. A public hosted deployment is not currently included.
+The Blueprint defaults to **public preview mode** (`AI_PROVIDER=disabled`), which needs no model API key. Visitors can use missions, uploads, reflections, and the journal; live coaching is disabled with a clear local-setup link and labelled example. Set `DEMO_VIDEO_URL` to your HTTPS walkthrough link to show the video button. Live hosted inference is an optional upgrade.
+
+See **[DEPLOYMENT.md](DEPLOYMENT.md)** for the preview deployment steps, local production setup, hosted configuration, and deployment checks. A public hosted deployment has not yet been created.
 
 ## Privacy and practical limits
 
@@ -168,7 +170,7 @@ More details are in **[SECURITY.md](SECURITY.md)** and **[DEPLOYMENT.md](DEPLOYM
 
 ## What has been verified
 
-The current build passes **16 automated tests**, TypeScript checking, and the production build. The tests cover application contracts and behavior, including an HTTP upload flow using mock inference. A live local Gemma request has also returned a coaching card for a sample flower-and-sketch pair.
+The current build passes **17 automated tests**, TypeScript checking, and the production build. The tests cover application contracts and behavior, including an HTTP upload flow using mock inference and a preview-mode check that rejects AI requests without accepting uploads. A live local Gemma request has also returned a coaching card for a sample flower-and-sketch pair.
 
 These checks establish working application plumbing and a live sample comparison. Accuracy across all six categories and benefits for real outdoor users still need evaluation. The repository includes an [evaluation guide](evaluation/README.md) and runner for recording picture-pair results. See **[BUILD-STATUS.md](BUILD-STATUS.md)** for detailed findings and remaining work.
 

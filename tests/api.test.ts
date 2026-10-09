@@ -3,6 +3,22 @@ import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
 import sharp from 'sharp';
+test('public preview exposes setup details and rejects inference without accepting uploads', async () => {
+  const app = spawn(process.execPath, ['--import', 'tsx', 'server/index.ts'], { env: { ...process.env, AI_PROVIDER: 'disabled', AI_API_KEY: '', DEMO_VIDEO_URL: 'https://youtu.be/walkthrough', PORT: '3098', HOST: '127.0.0.1' }, stdio: ['ignore', 'pipe', 'pipe'] });
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const timeout = setTimeout(() => reject(new Error('Preview server did not start')), 15000);
+      app.once('error', error => { clearTimeout(timeout); reject(error); });
+      app.stdout.on('data', chunk => { if (String(chunk).includes('listening')) { clearTimeout(timeout); resolve(); } });
+    });
+    const caps = await (await fetch('http://127.0.0.1:3098/api/capabilities')).json();
+    assert.equal(caps.provider, 'disabled'); assert.equal(caps.configured, false);
+    assert.equal(caps.demoVideoUrl, 'https://youtu.be/walkthrough');
+    assert.match(caps.notice, /no pictures are sent for AI analysis/i);
+    const response = await fetch('http://127.0.0.1:3098/api/coach', { method: 'POST' });
+    assert.equal(response.status, 503); assert.equal((await response.json()).code, 'NOT_CONFIGURED');
+  } finally { app.kill(); }
+});
 test('HTTP upload pipeline validates both images and returns model feedback', async () => {
   const { createServer } = await import('node:http');
   let seenImages = 0;
