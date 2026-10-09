@@ -25,7 +25,7 @@ The committed `render.yaml` now uses `AI_PROVIDER=disabled`. This hosts the comp
 2. Confirm Render found `render.yaml`. Review the paid `0.5c-512mb` compute plan and check that your promotional credits are active before creating it.
 3. Create the Blueprint. No inference API key or provider account is needed for this mode.
 4. Wait for the build/deploy to finish, then open the assigned `https://...onrender.com` URL.
-5. In the service's **Environment** settings, optionally add `DEMO_VIDEO_URL` with your HTTPS YouTube or Google Drive video link. Save and deploy. The public preview will then show **Watch walkthrough**.
+5. The **Watch walkthrough** button defaults to [the SketchWild video](https://youtu.be/K3OrR_PUB0c). To replace it, add `DEMO_VIDEO_URL` with your new HTTPS link in the service's **Environment** settings, then save and deploy.
 6. Check `/api/health` and `/api/capabilities`: `configured` should be `false` and `provider` should be `disabled`. Verify the preview notice, disabled observation button, example link, and saving/exporting a journal entry.
 
 Use YouTube **Unlisted** for an easy-to-watch demo that anyone with the link can open, or a Drive link with **Anyone with the link → Viewer** access. Check the link in a signed-out browser. Do not use a private video or a Drive file requiring permission.

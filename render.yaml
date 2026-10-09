@@ -15,6 +15,8 @@ services:
         value: disabled
       - key: AI_MODEL
         value: gemma3:4b
+      - key: DEMO_VIDEO_URL
+        value: https://youtu.be/K3OrR_PUB0c
       - key: AI_TIMEOUT_MS
         value: 45000
       - key: AI_IMAGE_MAX_EDGE

@@ -111,6 +111,10 @@ Open **[http://127.0.0.1:5173](http://127.0.0.1:5173)**. Keep the development te
 
 **Allow time for feedback on a CPU.** One recorded Gemma comparison on the development laptop took approximately **146 seconds**. That is a single sample measurement, not a general speed benchmark. The default local request timeout is five minutes.
 
+### Watch the walkthrough
+
+[Watch SketchWild on YouTube](https://youtu.be/K3OrR_PUB0c) — a narrated walkthrough of the sketching workflow and local Gemma comparison.
+
 ### Try the upload flow
 
 You can use the included [sample images](demo-images) to check the workflow:

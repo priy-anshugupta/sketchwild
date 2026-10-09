@@ -35,7 +35,7 @@ async function capabilities(): Promise<Capabilities> {
     reason = configured ? '' : 'A hosted open vision endpoint, model, and server API key are required.';
   } else reason = 'This public preview has no live model. Run SketchWild locally with Ollama and Gemma 3 for AI observations; no API key is required.';
   let demoVideoUrl: string | undefined;
-  try { const video = new URL(process.env.DEMO_VIDEO_URL || ''); if (video.protocol === 'https:') demoVideoUrl = video.href; } catch { /* A video link is optional. */ }
+  try { const video = new URL(process.env.DEMO_VIDEO_URL || 'https://youtu.be/K3OrR_PUB0c'); if (video.protocol === 'https:') demoVideoUrl = video.href; } catch { /* Invalid overrides are not shown. */ }
   const value: Capabilities = { provider: provider === 'ollama' ? 'ollama' : provider === 'hosted' ? 'hosted' : 'disabled', configured, model: config.model, timeoutMs: config.timeoutMs, readiness: 'experimental', reason,
     demoVideoUrl,
     notice: provider === 'ollama' ? 'Photos are processed by Ollama on this app’s computer. On CPU, two photos can take several minutes. Journal entries stay in your browser.' : provider === 'hosted' ? `These two photos are sent through the app server to the configured AI provider. ${process.env.AI_RETENTION_NOTICE || 'Provider retention has not been verified. Use non-sensitive subject and sketch photos.'} Journal entries stay in your browser.` : 'Live AI is turned off in this preview. Uploaded pictures and journal entries stay in this browser; no pictures are sent for AI analysis.' };
