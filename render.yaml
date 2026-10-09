@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: sketchwild
+    runtime: node
+    plan: 0.5c-512mb
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.18.0
+      - key: HOST
+        value: 0.0.0.0
+      - key: AI_PROVIDER
+        value: hosted
+      - key: AI_MODEL
+        sync: false
+      - key: AI_BASE_URL
+        sync: false
+      - key: AI_API_KEY
+        sync: false
+      - key: AI_RETENTION_NOTICE
+        sync: false
+      - key: AI_TIMEOUT_MS
+        value: 45000
+      - key: AI_IMAGE_MAX_EDGE
+        value: 1280
+      - key: AI_DAILY_REQUEST_LIMIT
+        value: 100
