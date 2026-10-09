@@ -1,0 +1,11 @@
+[
+  {
+    "id": "leaves-heldout-01",
+    "category": "leaves",
+    "intent": "observation",
+    "subject": "photos/your-real-leaf.jpg",
+    "sketch": "photos/your-paper-sketch.jpg",
+    "caseType": "clear",
+    "expectedVisibleDetails": "Write the features actually visible in both pictures before running the model."
+  }
+]
