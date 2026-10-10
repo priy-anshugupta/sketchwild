@@ -40,6 +40,12 @@ Public preview mode is ready for Render (`AI_PROVIDER=disabled`) without an infe
 
 Local preview: http://127.0.0.1:5173. Run `npm run dev` if it is stopped. Model setup, privacy details, and deployment instructions are in README.md.
 
+## Copilot review follow-up — October 10, 2026
+
+The user supplied a GitHub Copilot review of preview mode, accessibility, and draft handling. Two findings were checked against the source and addressed: the preview banner now says live feedback is off, and each modal uses a unique heading ID with `aria-labelledby`. The review also confirmed the disabled inference guard and available journal saving/export paths.
+
+The review's pending-write/tab-close concern remains a test gap; these changes do not establish guaranteed persistence on immediate tab closure. Browser lifecycle and screen-reader coverage are not part of the 17 existing automated tests.
+
 ## Pencil shortcut completed — October 9, 2026
 
 The header pencil is now a keyboard-accessible Start a new sketch button. It opens a subject picker with six categories and an outdoor missions shortcut. Choosing a category starts the existing draft flow; closing or pressing Escape keeps the current session intact. Verified in the browser at desktop and 390px mobile widths: picker opens, Leaves starts an exercise, Escape returns to the same draft, and Browse outdoor missions opens Missions. The mobile picker has no horizontal overflow. Production build passes. Screenshot: artifacts/new-sketch-picker.png.

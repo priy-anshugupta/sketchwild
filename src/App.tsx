@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ChangeEvent } from 'react';
+import { useEffect, useId, useRef, useState, type ChangeEvent } from 'react';
 import { Leaf, Flower2, Trees, Mountain, ScanLine, Image as ImageIcon, Compass, BookOpen, Settings, Plus, Check, X, Clock, Pencil, Camera, RotateCw, Download, Trash2, ChevronRight, Menu, Sparkles, Eye, CircleHelp, LoaderCircle, RefreshCw, ShieldCheck, Sun, Award, Printer } from 'lucide-react';
 import { categories, categoryById, type CategoryId } from '../shared/catalog';
 import type { Analysis, Capabilities, Session } from '../shared/types';
@@ -47,8 +47,9 @@ function Uploader({ label, hint, value, onChange, onError }: { label: string; hi
 }
 function Modal({ title, children, close }: { title: string; children: React.ReactNode; close: () => void }) {
   const ref = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
   useEffect(() => { ref.current?.showModal(); }, []);
-  return <dialog ref={ref} onCancel={close} onClick={e => { if (e.target === e.currentTarget) close(); }}><div className="dialog-head"><h2>{title}</h2><button className="icon-button" onClick={close} aria-label="Close dialog"><X /></button></div>{children}</dialog>;
+  return <dialog ref={ref} aria-labelledby={titleId} onCancel={close} onClick={e => { if (e.target === e.currentTarget) close(); }}><div className="dialog-head"><h2 id={titleId}>{title}</h2><button className="icon-button" onClick={close} aria-label="Close dialog"><X /></button></div>{children}</dialog>;
 }
 function FeedbackCard({ feedback }: { feedback: Analysis }) {
   const coaching = feedback.status === 'coach';
